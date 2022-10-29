@@ -20,7 +20,7 @@ model user {
     updatedAt DateTime @updatedAt
 }
 
-model categroy {
+model category {
     id       BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
     title    String
     articles article[]
@@ -33,6 +33,6 @@ model article {
     thumb      String
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
-    categroy   categroy? @relation(fields: [categroyId], references: [id], onDelete: Cascade)
-    categroyId BigInt?   @db.UnsignedBigInt
+    category   category? @relation(fields: [categoryId], references: [id])
+    categoryId BigInt?   @db.UnsignedBigInt
 }
