@@ -2,10 +2,22 @@ import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ConfigService } from './config.service'
+import { DbService } from './db.service'
 
 @Module({
     imports: [],
     controllers: [AppController],
-    providers: [AppService, ConfigService]
+    providers: [
+        AppService,
+        ConfigService,
+        {
+            provide: 'DbService',
+            inject: ['ConfigService'],
+            // 这里会自动注入到工厂函数里面
+            useFactory(configService) {
+                return new DbService(configService)
+            }
+        }
+    ]
 })
 export class AppModule {}
