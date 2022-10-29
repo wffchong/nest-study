@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common'
+import { DynamicModule, Global, Module } from '@nestjs/common'
 import { ConfigService } from './config.service'
 
 @Global()
@@ -6,4 +6,12 @@ import { ConfigService } from './config.service'
     providers: [ConfigService],
     exports: [ConfigService]
 })
-export class ConfigModule {}
+export class ConfigModule {
+    static register(options: { path: string }): DynamicModule {
+        return {
+            global: true,
+            module: ConfigModule,
+            providers: [{ provide: 'CONFIG_OPTIONS', useValue: options }]
+        }
+    }
+}
