@@ -3,9 +3,11 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ConfigService } from './config.service'
 import { DbService } from './db.service'
+import { TestModule } from './test/test.module'
+import { HdModule } from './hd/hd.module'
 
 @Module({
-    imports: [],
+    imports: [TestModule, HdModule],
     controllers: [AppController],
     providers: [
         AppService,
