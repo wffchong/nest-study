@@ -16,8 +16,13 @@ import { HdModule } from './hd/hd.module'
             provide: 'DbService',
             inject: ['ConfigService'],
             // 这里会自动注入到工厂函数里面
-            useFactory(configService) {
-                return new DbService(configService)
+            useFactory: async (configService) => {
+                return new Promise((r) => {
+                    setTimeout(() => {
+                        r('异步服务')
+                    }, 3000)
+                })
+                // return new DbService(configService)
             }
         }
     ]

@@ -4,10 +4,11 @@ import { DbService } from './db.service'
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService, @Inject('DbService') private readonly dbService: DbService) {}
+    constructor(private readonly appService: AppService, @Inject('DbService') private readonly dbService: string) {}
 
     @Get()
     getHello(): string {
-        return this.dbService.connect()
+        // return this.dbService.connect()
+        return this.dbService
     }
 }
