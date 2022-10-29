@@ -7,7 +7,7 @@ export class AppController {
     constructor(private readonly configService: ConfigService) {}
 
     @Get()
-    getHello(): any {
-        return this.configService.get()
+    getHello(): string {
+        return this.configService.get('upload.exts')
     }
 }

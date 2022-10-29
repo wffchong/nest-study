@@ -7,7 +7,6 @@ export class ConfigService {
     config = {} as any
     constructor() {
         const config = { path: path.resolve(__dirname, '../configure') }
-        console.log(config)
         readdirSync(config.path).map(async (file) => {
             if (file.slice(-2) === 'js') {
                 const module = await import(path.resolve(config.path, file))
@@ -16,7 +15,10 @@ export class ConfigService {
         })
     }
 
-    get() {
-        return this.config.app.name
+    get(path: string) {
+        // return this.config.app.name
+        console.log(this.config)
+        console.log(path)
+        return path.split('.').reduce((config, name) => config[name], this.config)
     }
 }
