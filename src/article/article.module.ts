@@ -3,7 +3,7 @@ import { ConfigModule } from 'src/config/config.module'
 import { ArticleController } from './article.controller'
 
 @Module({
-    imports: [ConfigModule],
+    // imports: [ConfigModule],
     controllers: [ArticleController]
 })
 export class ArticleModule {}
