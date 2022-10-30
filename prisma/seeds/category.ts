@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client'
 import { Random } from 'mockjs'
 import { create } from '../helper'
 
-export const category = () => {
-    create(30, async (prisma: PrismaClient) => {
+export const category = async () => {
+    await create(10, async (prisma: PrismaClient) => {
         await prisma.category.create({
             data: {
                 title: Random.ctitle()

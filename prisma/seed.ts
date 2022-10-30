@@ -1,9 +1,11 @@
 import { category } from './seeds/category'
 import { user } from './seeds/user'
+import { article } from './seeds/article'
 
-function run() {
+async function run() {
     user()
-    category()
+    await category()
+    article()
 }
 
 run()
