@@ -1,10 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
-import RegisterDto from './dto/register.dto'
+import { Controller } from '@nestjs/common'
 
 @Controller('auth')
-export class AuthController {
-    @Post('register')
-    register(@Body() dto: RegisterDto) {
-        return dto
-    }
-}
+export class AuthController {}
