@@ -1,20 +1,32 @@
-import { Controller, Get, Inject } from '@nestjs/common'
-import { ConfigService, ConfigType } from '@nestjs/config'
-import databaseConfig from './config/database.config'
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common'
+import { PrismaClient } from '@prisma/client'
+import { AppService } from './app.service'
+import CreateArticleDto from './dto/create.article.dto'
+import { HdPipe } from './Hd.pipe'
 
 @Controller()
 export class AppController {
-    constructor(
-        private readonly config: ConfigService,
-        @Inject(databaseConfig.KEY)
-        private database: ConfigType<typeof databaseConfig>
-    ) {}
+    prisma: PrismaClient
+    constructor(private readonly appService: AppService) {
+        this.prisma = new PrismaClient()
+    }
 
-    @Get()
-    getHello(): string {
-        // return this.config.get('APP_NAME')
-        // return process.env.NODE_ENV
-        // return this.config.get('upload.allowType')
-        return this.database.host
+    @Get(':id')
+    getHello(@Param('id', ParseIntPipe) id: number) {
+        return this.prisma.article.findUnique({
+            where: {
+                id
+            }
+        })
+    }
+
+    @Post('store')
+    async add(@Body(HdPipe) dto: CreateArticleDto) {
+        return this.prisma.article.create({
+            data: {
+                title: dto.title,
+                content: dto.content
+            }
+        })
     }
 }
