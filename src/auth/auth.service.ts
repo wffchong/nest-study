@@ -3,9 +3,11 @@ import { PrismaService } from 'src/prisma/prisma.service'
 import { RegisterDto } from './dto/register.dto'
 import { hash, verify } from 'argon2'
 import { LoginDto } from './dto/login.dto'
+import { user } from '@prisma/client'
+import { JwtService } from '@nestjs/jwt'
 @Injectable()
 export class AuthService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService, private readonly jwt: JwtService) {}
 
     async register(dto: RegisterDto) {
         const user = this.prisma.user.create({
@@ -28,6 +30,16 @@ export class AuthService {
             throw new BadRequestException('密码输入错误')
         }
 
-        return user
+        return this.token(user)
+    }
+
+    // 获取token
+    async token({ name, id }: user) {
+        return {
+            token: await this.jwt.signAsync({
+                name,
+                sub: id
+            })
+        }
     }
 }
