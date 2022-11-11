@@ -42,4 +42,9 @@ export class AuthService {
             })
         }
     }
+
+    // 查找所有
+    async findAll() {
+        return await this.prisma.user.findMany()
+    }
 }
