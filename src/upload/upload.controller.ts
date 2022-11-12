@@ -1,7 +1,7 @@
 import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { TransformInterceptor } from 'src/TransformInterceptor'
-import { fileFilter, upload, uploadImage, uploadMarkdown } from './decorator/upload.decorator'
+import { uploadImage, uploadMarkdown } from './decorator/upload.decorator'
 
 @Controller('upload')
 // 使用拦截器
