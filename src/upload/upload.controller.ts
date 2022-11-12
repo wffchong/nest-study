@@ -1,14 +1,7 @@
-import {
-    Controller,
-    MethodNotAllowedException,
-    Post,
-    UnsupportedMediaTypeException,
-    UploadedFile,
-    UseInterceptors
-} from '@nestjs/common'
+import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { TransformInterceptor } from 'src/TransformInterceptor'
-import { upload } from './decorator/upload.decorator'
+import { fileFilter, upload } from './decorator/upload.decorator'
 
 @Controller('upload')
 // 使用拦截器
@@ -28,13 +21,7 @@ export class UploadController {
         limits: {
             fileSize: Math.pow(1024, 2) * 2
         },
-        fileFilter(req: any, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) {
-            if (!file.mimetype.includes('image')) {
-                callback(new UnsupportedMediaTypeException('文件类型错误'), false)
-            } else {
-                callback(null, true)
-            }
-        }
+        fileFilter: fileFilter(['image'])
     })
     uploadImg(@UploadedFile() file: Express.Multer.File) {
         return file
