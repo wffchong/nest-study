@@ -16,3 +16,27 @@ export function fileFilter(type: string[]) {
 export function upload(field = 'file', options: MulterOptions) {
     return applyDecorators(UseInterceptors(FileInterceptor(field, options)))
 }
+
+// 封装上传图片
+export function uploadImage(field = 'file') {
+    return upload(field, {
+        limits: { fieldSize: Math.pow(1024, 2) * 3 },
+        fileFilter: fileFilter(['image'])
+    })
+}
+
+// 封装上传markdown
+export function uploadMarkdown(field = 'file') {
+    return upload(field, {
+        limits: { fieldSize: Math.pow(1024, 2) * 3 },
+        fileFilter: fileFilter(['markdown'])
+    })
+}
+
+// 封装上传文件
+export function uploadFile(field = 'file', type: string[] = ['image']) {
+    return upload(field, {
+        limits: { fieldSize: Math.pow(1024, 2) * 3 },
+        fileFilter: fileFilter(type)
+    })
+}
